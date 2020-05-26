@@ -1,5 +1,6 @@
 <?php
   include 'functions/functions.php';
+  session_start();
 ?>
 <!doctype html>
 <html lang="en">
@@ -41,9 +42,15 @@
               endforeach;
             ?>
             </select>
+            <input type="submit" name="dispBtn" value=" Display Student" class="btn btn-outline-success btn-block">
           </form>
-          <a href="disp_student_list.php?subject_id=<?php echo $_POST['subject_id']?>" 
-                  class="btn btn-outline-success btn-block">Display Student</a>
+          <?php
+            if (isset($_POST['dispBtn'])) {
+              $_GET['subject_id'] = $_POST['subject_id'];
+              header('location: disp_student_list.php'. $_GET['subject_id']);
+            }
+          ?>
+          <!-- <a href="clearSub.php" class="btn btn-outline-info">Clear Search</a> -->
         </div>
         <!-- <br> -->
         <a href="logout.php" class="btn btn-danger btn-block">Logout</a>
@@ -55,7 +62,7 @@
         <?php
           $student_id = "-1";// select all student
           $subject_id = $_GET['subject_id'];
-          if (!$subject_id) {
+          if (empty($subject_id)) {
             $subject_id = "-1";
           }
           $data = getStudent($student_id, $subject_id);

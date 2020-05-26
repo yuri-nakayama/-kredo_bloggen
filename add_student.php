@@ -33,31 +33,31 @@
             Add Student
           </div>
           <div class="card-body">
-            <form action="" method="post">
+            <form action="" method="post" enctype="multipart/form-data">
               <div class="form-group">
                 <label for="">Student Fisrt Name</label>
-                <input type="text" name="fname" id="" class="form-control">
+                <input type="text" name="fname" id="" class="form-control" required>
               </div>
               <div class="form-group">
                 <label for="">Student Last Name</label>
-                <input type="text" name="lname" id="" class="form-control">
+                <input type="text" name="lname" id="" class="form-control" required>
               </div>
               <div class="form-group">
                 <label for="">Student Username</label>
-                <input type="text" name="username" id="" class="form-control">
+                <input type="text" name="username" id="" class="form-control" required>
               </div>
               <div class="form-group">
                 <label for="">Student Password</label>
-                <input type="password" name="password" id="" class="form-control">
+                <input type="password" name="password" id="" class="form-control" required>
               </div>
               <div class="form-group">
                 <label for="">Student Email</label>
-                <input type="text" name="email" id="" class="form-control">
+                <input type="text" name="email" id="" class="form-control" required>
               </div>
               <div class="form-group">
                 <label for="">Subject</label>
                 <select name="subject_id" id="" 
-                class="form-control">
+                class="form-control" required>
                   <option value="" disabled selected></option>
                 <?php
                   $subject_id = "-1";// select all department
@@ -73,16 +73,14 @@
                 </select>
               </div>
 
-              <!-- <form action="" method="post" enctype="multipart/form-data">
-                <div class="form-group">
-                  <label for="">Student Picture</label>
-                  <div class="custom-file">
-                    <input type="file" name="img" id="img" class="custom-file-input">
-                    <label class="custom-file-label" for="">
-                    </label>
-                  </div>
+              <div class="form-group" required>
+                <label for="">Student Picture</label>
+                <div class="custom-file">
+                  <input type="file" name="img" id="img" class="custom-file-input">
+                  <label class="custom-file-label" for="">
+                  </label>
                 </div>
-              </form> -->
+              </div>
 
               <input type="submit" name="submitBtn" value="Submit" class="btn btn-primary btn-block">
             </form>

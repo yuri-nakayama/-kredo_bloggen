@@ -53,19 +53,20 @@
 
   function addStudent ($first_name, $last_name, $username, $password, $email, $subject_id, $img) {
 
-    // $target_dir = 'uploads/';// directory
-    // $target_file = $target_dir.basename($img);// basename() - retrurns string, gives you the filename if you specify the file path
+    $target_dir = 'uploads/';// directory
+    $target_file = $target_dir.basename($img);// basename() - retrurns string, gives you the filename if you specify the file path
 
     $con = connection();
     // sql
-    // $sql = "INSERT INTO students (first_name, last_name, username, password, email, subject_id, student_pic) 
-    //         VALUE ('$first_name', '$last_name', '$username', '$password', '$email', '$subject_id', '$target_file');";
-    $sql = "INSERT INTO students (first_name, last_name, username, password, email, subject_id) 
-            VALUE ('$first_name', '$last_name', '$username', '$password', '$email', '$subject_id');";
+    $sql = "INSERT INTO students (first_name, last_name, username, password, email, subject_id, student_pic) 
+            VALUES ('$first_name', '$last_name', '$username', '$password', '$email', '$subject_id', '$img')";
+    // $sql = "INSERT INTO students (first_name, last_name, username, password, email, subject_id) 
+    //         VALUE ('$first_name', '$last_name', '$username', '$password', '$email', '$subject_id');";
     $res = $con->query($sql);
 
     if ($res) {
       // header('location: login.php');
+      move_uploaded_file($_FILES['img']['tmp_name'], $target_file);
 
     } else {
       echo $sql. "<br>";
@@ -81,13 +82,13 @@
     // sql
     $sql = "SELECT * FROM students";
     if ($student_id != "-1") {
-      $sql = $sql. 
-            " INNER JOIN subject ON students.subject_id = subject.subject_id
+      $sql = "SELECT * FROM students
+             INNER JOIN subject ON students.subject_id = subject.subject_id
              WHERE students.student_id = '$student_id'";
     }
     if ($subject_id != "-1") {
-      $sql = $sql. 
-            " INNER JOIN subject ON students.subject_id = subject.subject_id
+      $sql = "SELECT * FROM students
+             INNER JOIN subject ON students.subject_id = subject.subject_id
              WHERE subject.subject_id = '$subject_id'";
     }
     $res = $con->query($sql);
@@ -138,8 +139,8 @@
 
   function updStudent ($student_id, $first_name, $last_name, $username, $password, $email, $subject_id, $img) {
 
-    // $target_dir = 'uploads/';// directory
-    // $target_file = $target_dir.basename($img);// basename() - retrurns string, gives you the filename if you specify the file path
+    $target_dir = 'uploads/';// directory
+    $target_file = $target_dir.basename($img);// basename() - retrurns string, gives you the filename if you specify the file path
     
     $con = connection();
     $sql = "UPDATE students 
@@ -148,15 +149,16 @@
                 username = '$username',
                 password = '$password',
                 email = '$email',
-                subject_id = '$subject_id'
+                subject_id = '$subject_id',
+                student_pic = '$img'
             WHERE student_id = '$student_id'";
-                // student_pic = '$target_file'
 
     $res = $con->query($sql);
 
     if ($res) {
       // header('location: disp_student.php);
-      
+      move_uploaded_file($_FILES['img']['tmp_name'], $target_file);
+
     } else {
       echo $sql. "<br>";
       die('error updating in students table: '.$con->error);
